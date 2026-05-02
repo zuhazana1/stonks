@@ -1,12 +1,25 @@
+import io
+import requests
 import pandas as pd
 import yfinance as yf
 from datetime import datetime, timedelta
 
+_WIKI_URL = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
+_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Safari/537.36"
+    ),
+    "Accept-Language": "en-US,en;q=0.9",
+}
+
 
 def get_sp500_tickers() -> list[str]:
     """Scrape current S&P 500 constituents from Wikipedia."""
-    url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
-    tables = pd.read_html(url)
+    resp = requests.get(_WIKI_URL, headers=_HEADERS, timeout=15)
+    resp.raise_for_status()
+    tables = pd.read_html(io.StringIO(resp.text))
     df = tables[0]
     tickers = df["Symbol"].tolist()
     # Fix dot notation (BRK.B -> BRK-B for yfinance)

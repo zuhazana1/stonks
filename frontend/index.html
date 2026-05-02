@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stonks — S&P 500 Intelligence</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+
+  <!-- ── Loading Screen ── -->
+  <div id="loading-screen">
+    <div class="loader-box">
+      <div class="loader-logo">STONKS</div>
+      <div class="loader-sub">S&amp;P 500 Intelligence</div>
+      <div class="loader-msg" id="loader-msg">Connecting…</div>
+      <div class="loader-track"><div class="loader-fill" id="loader-fill"></div></div>
+      <div class="loader-hint">Fetching 500+ tickers · Running ML models · Generating insights</div>
+    </div>
+  </div>
+
+  <!-- ── App ── -->
+  <div id="app" style="display:none">
+
+    <header id="topbar">
+      <div class="tb-left">
+        <span class="logo">STONKS</span>
+        <span class="tagline">S&amp;P 500 Intelligence</span>
+      </div>
+      <div class="tb-right">
+        <span id="last-updated" class="muted"></span>
+      </div>
+    </header>
+
+    <div id="banner">
+      <span class="banner-tag">AI MARKET PULSE</span>
+      <span id="banner-text" class="banner-body">Generating market overview…</span>
+    </div>
+
+    <div id="layout">
+
+      <!-- Left sidebar: ranked stock list -->
+      <aside id="sidebar">
+        <div class="panel-hd">TOP PERFORMERS</div>
+        <div id="stock-list"></div>
+      </aside>
+
+      <!-- Center: charts + stock header -->
+      <div id="center">
+
+        <div id="stock-hdr" class="hidden">
+          <div id="sh-ticker"></div>
+          <div id="sh-price"></div>
+          <div id="sh-change"></div>
+          <div id="sh-3mo-wrap">3M: <span id="sh-3mo"></span></div>
+        </div>
+
+        <div id="chart-area" class="hidden">
+          <div class="chart-block">
+            <div class="chart-lbl">Price &amp; Volume · Bollinger Bands (20,2)</div>
+            <div id="c-main"></div>
+          </div>
+          <div class="chart-block">
+            <div class="chart-lbl">RSI (14) — 70 overbought / 30 oversold</div>
+            <div id="c-rsi"></div>
+          </div>
+          <div class="chart-block">
+            <div class="chart-lbl">MACD (12, 26, 9)</div>
+            <div id="c-macd"></div>
+          </div>
+        </div>
+
+        <div id="placeholder">
+          <span>← Select a stock to view charts</span>
+        </div>
+
+      </div>
+
+      <!-- Right sidebar: stats + AI -->
+      <aside id="right">
+        <div class="panel-hd">KEY STATISTICS</div>
+        <div id="key-stats"><p class="muted">Select a stock</p></div>
+
+        <div class="panel-hd" style="margin-top:18px">
+          AI ANALYSIS
+          <span class="ai-badge">claude opus 4.7</span>
+        </div>
+        <div id="ai-panel"><p class="muted">Select a stock for AI-generated analysis</p></div>
+      </aside>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
